@@ -44,5 +44,4 @@ public class InspectorService {
     public void deleteById(int id){
         inspectorRepository.deleteById(id);
     }
-
 }

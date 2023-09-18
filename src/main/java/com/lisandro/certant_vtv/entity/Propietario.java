@@ -13,12 +13,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Propietario extends Persona{
+    
     @OneToMany(mappedBy = "propietario")
     private List<Vehiculo> vehiculo;
 
     public Propietario(String nombre, String apellido, String dni, String telefono, String email) {
         super(nombre, apellido, dni, telefono, email);
     }
-    
-    
 }

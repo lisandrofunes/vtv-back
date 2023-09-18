@@ -17,6 +17,4 @@ public class Inspector extends Persona {
         super(nombre, apellido, dni, telefono, email);
         this.legajo = legajo;
     }
-
-   
 }

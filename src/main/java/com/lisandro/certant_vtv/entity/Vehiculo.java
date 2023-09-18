@@ -1,5 +1,7 @@
 package com.lisandro.certant_vtv.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,13 +27,12 @@ public class Vehiculo {
     private Modelo modelo;
     @ManyToOne
     @JoinColumn(name = "id_prop")
+    @JsonBackReference
     private Propietario propietario;
     
     public Vehiculo(String dominio, Modelo modelo, Propietario propietario) {
         this.dominio = dominio;
         this.modelo = modelo;
         this.propietario = propietario;
-    }
-
-    
+    } 
 }

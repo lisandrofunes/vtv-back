@@ -28,9 +28,9 @@ public class Inspeccion {
     private Date fecha;
     @Column(columnDefinition = "TIME")
     private LocalTime hora;
-    @ManyToOne
-    @JoinColumn(name = "id_propietario")
-    private Propietario propietario;
+    // @ManyToOne
+    // @JoinColumn(name = "id_propietario")
+    // private Propietario propietario;
     @ManyToOne
     @JoinColumn(name = "id_vehiculo")
     private Vehiculo vehiculo;
@@ -42,10 +42,9 @@ public class Inspeccion {
     private Estado estado;
     private Boolean esExento;
 
-    public Inspeccion(Date fecha, LocalTime hora, Propietario propietario, Vehiculo vehiculo, Inspector inspector, Estado estado, Boolean esExento) {
+    public Inspeccion(Date fecha, LocalTime hora, Vehiculo vehiculo, Inspector inspector, Estado estado, Boolean esExento) {
         this.fecha = fecha;
         this.hora = hora;
-        this.propietario = propietario;
         this.vehiculo = vehiculo;
         this.inspector = inspector;
         this.estado = estado;

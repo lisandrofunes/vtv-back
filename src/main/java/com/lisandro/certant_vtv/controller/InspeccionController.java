@@ -1,6 +1,8 @@
 package com.lisandro.certant_vtv.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +45,18 @@ public class InspeccionController {
     ModeloService modeloService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<Inspeccion>> findAll(){
+    public ResponseEntity<?> findAll(){
 
-        List<Inspeccion> list = inspeccionService.findAll();
+        try {
+            List<Inspeccion> list = inspeccionService.findAll();
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("mensaje", "Error al buscar inspecciones");
+            errorResponse.put("detalle", e.getMessage()); // Agrega detalles de la excepción
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/create")
@@ -121,20 +130,10 @@ public class InspeccionController {
                 }
             }
 
-            System.out.println("fecha: "+ inspeccionDto.getFecha());
-
-            System.out.println("hora"+ inspeccionDto.getHora());
-
-            System.out.println("inspec" + inspeccionDto.getInspector());
-
-            System.out.println("estado: "+ inspeccionDto.getEstado().getNombre());
-
-            System.out.println("esExento: " + inspeccionDto.getEsExento());
-
             Inspeccion inspeccion = new Inspeccion(
                 inspeccionDto.getFecha(),
                 inspeccionDto.getHora(),
-                propietarioService.findByDni(propietario.getDni()).get(),
+                // propietarioService.findByDni(propietario.getDni()).get(),
                 vehiculoService.findByDominio(vehiculo.getDominio()).get(),
                 inspeccionDto.getInspector(),
                 inspeccionDto.getEstado(),
@@ -178,5 +177,14 @@ public class InspeccionController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Inspeccion> getById(@PathVariable("id") int id){
+        if(!inspeccionService.existsById(id))
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Inspeccion inspeccion = inspeccionService.getOne(id).get();
+        return new ResponseEntity<>(inspeccion, HttpStatus.OK);
+    }
+
 
 }
