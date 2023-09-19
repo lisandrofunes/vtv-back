@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lisandro.certant_vtv.dto.InspeccionDto;
 import com.lisandro.certant_vtv.entity.Propietario;
 import com.lisandro.certant_vtv.entity.Vehiculo;
+import com.lisandro.certant_vtv.entity.Estado;
 import com.lisandro.certant_vtv.entity.Inspeccion;
 import com.lisandro.certant_vtv.entity.Modelo;
 import com.lisandro.certant_vtv.service.PropietarioService;
 import com.lisandro.certant_vtv.service.VehiculoService;
+import com.lisandro.certant_vtv.service.EstadoService;
 import com.lisandro.certant_vtv.service.InspeccionService;
 import com.lisandro.certant_vtv.service.ModeloService;
 
@@ -44,19 +46,16 @@ public class InspeccionController {
     @Autowired
     ModeloService modeloService;
 
+    @Autowired
+    EstadoService estadoService;
+
     @GetMapping("/list")
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<List<Inspeccion>> findAll(){
 
-        try {
-            List<Inspeccion> list = inspeccionService.findAll();
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        } catch (Exception e) {
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("mensaje", "Error al buscar inspecciones");
-            errorResponse.put("detalle", e.getMessage()); // Agrega detalles de la excepción
+        List<Inspeccion> list = inspeccionService.findAll();
 
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+        
     }
 
     @PostMapping("/create")
@@ -195,6 +194,24 @@ public class InspeccionController {
         Inspeccion inspeccion = inspeccionService.findByVehiculo(vehiculo).get();
 
         return new ResponseEntity<>(inspeccion, HttpStatus.OK);
+    }
+
+    @GetMapping("/listbyestado/{id}")
+    public ResponseEntity<List<Inspeccion>> findByEstado(@PathVariable("id") int id){
+
+        try {
+            Estado estado = estadoService.findById(id).get();
+
+            List<Inspeccion> list = inspeccionService.findByEstado(estado);
+            
+            return new ResponseEntity<>(list, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        
+        
     }
 
 }

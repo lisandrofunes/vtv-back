@@ -90,9 +90,14 @@ public class PropietarioController {
     @GetMapping("/by/{dni}")
     public ResponseEntity<Propietario> findByDni(@PathVariable("dni")String dni){
 
-        Propietario propietario = propietarioService.findByDni(dni).get();
+        try {
+            Propietario propietario = propietarioService.findByDni(dni).get();
+            return new ResponseEntity<>(propietario, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity<>(propietario, HttpStatus.OK);
+        
     }
 
 }

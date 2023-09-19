@@ -27,7 +27,7 @@ public class InspeccionService {
         return inspeccionRepository.findById(id);
     }
 
-    public Optional<Inspeccion> findByEstado(Estado estado){
+    public List<Inspeccion> findByEstado(Estado estado){
         return inspeccionRepository.findByEstado(estado);
     }
 
