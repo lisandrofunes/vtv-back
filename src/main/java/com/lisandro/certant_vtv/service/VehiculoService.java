@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lisandro.certant_vtv.entity.Propietario;
 import com.lisandro.certant_vtv.entity.Vehiculo;
 import com.lisandro.certant_vtv.repository.VehiculoRepository;
 
@@ -39,6 +40,10 @@ public class VehiculoService {
 
     public Optional<Vehiculo> findByDominio(String dominio) {
         return vehiculoRepository.findByDominio(dominio);
+    }
+
+    public List<Vehiculo> findByPropietario(Propietario propietario){
+        return vehiculoRepository.findByPropietario(propietario);
     }
 
 }

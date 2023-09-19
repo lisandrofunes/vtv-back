@@ -184,7 +184,17 @@ public class InspeccionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Inspeccion inspeccion = inspeccionService.getOne(id).get();
         return new ResponseEntity<>(inspeccion, HttpStatus.OK);
-    }
+    }   
 
+    
+    @GetMapping("/listbyvehiculo/{id}")
+    public ResponseEntity<Inspeccion> findByVehiculo(@PathVariable("id") int id){
+
+        Vehiculo vehiculo = vehiculoService.findById(id).get();
+        
+        Inspeccion inspeccion = inspeccionService.findByVehiculo(vehiculo).get();
+
+        return new ResponseEntity<>(inspeccion, HttpStatus.OK);
+    }
 
 }

@@ -108,4 +108,14 @@ public class VehiculoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    
+    @GetMapping("/listbyprop/{id}")
+    public ResponseEntity<List<Vehiculo>> findByPropietario(@PathVariable("id") int id){
+
+        Propietario propietario = propietarioService.findById(id).get();
+
+        List<Vehiculo> list = vehiculoService.findByPropietario(propietario);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }

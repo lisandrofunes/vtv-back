@@ -27,7 +27,6 @@ public class Vehiculo {
     private Modelo modelo;
     @ManyToOne
     @JoinColumn(name = "id_prop")
-    @JsonBackReference
     private Propietario propietario;
     
     public Vehiculo(String dominio, Modelo modelo, Propietario propietario) {

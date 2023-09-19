@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lisandro.certant_vtv.entity.Estado;
 import com.lisandro.certant_vtv.entity.Inspeccion;
+import com.lisandro.certant_vtv.entity.Vehiculo;
 import com.lisandro.certant_vtv.repository.InspeccionRepository;
 
 @Service
@@ -40,5 +41,10 @@ public class InspeccionService {
 
     public boolean existsById(int id){
         return inspeccionRepository.existsById(id);
+    }
+
+    
+    public Optional<Inspeccion> findByVehiculo(Vehiculo vehiculo){
+        return inspeccionRepository.findByVehiculo(vehiculo);
     }
 }

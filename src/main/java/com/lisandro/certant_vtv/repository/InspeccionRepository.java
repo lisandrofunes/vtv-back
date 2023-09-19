@@ -5,10 +5,13 @@ import org.springframework.stereotype.Repository;
 
 import com.lisandro.certant_vtv.entity.Estado;
 import com.lisandro.certant_vtv.entity.Inspeccion;
+import com.lisandro.certant_vtv.entity.Vehiculo;
+
 import java.util.Optional;
 
 
 @Repository
 public interface InspeccionRepository extends JpaRepository<Inspeccion, Integer>{
     Optional<Inspeccion> findByEstado(Estado estado);
+    Optional<Inspeccion> findByVehiculo(Vehiculo vehiculo);
 }
