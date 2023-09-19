@@ -96,22 +96,23 @@ public class InspeccionController {
 
             if(vehiculo == null){
 
-                String modeloNombre = inspeccionDto.getVehiculo().getModelo().getNombre();
-                Optional<Modelo> modeloOptional = modeloService.findByNombre(modeloNombre);
-                Modelo modelo = modeloOptional.orElse(null);
+                int modeloId = inspeccionDto.getVehiculo().getModelo().getId();
+                Modelo modelo = modeloService.findById(modeloId).get();
+                // Optional<Modelo> modeloOptional = modeloService.findById(modeloId);
+                // Modelo modelo = modeloOptional.orElse(null);
 
-                if (modelo == null) {
-                    try {
-                        Modelo modeloNuevo = new Modelo(
-                            inspeccionDto.getVehiculo().getModelo().getNombre(),
-                            inspeccionDto.getVehiculo().getModelo().getMarca()
-                        );
-                        modeloService.save(modeloNuevo);
-                        modelo = modeloNuevo; 
-                    } catch (Exception e) {
-                        return new ResponseEntity<>("No se pudo crear el modelo",HttpStatus.BAD_REQUEST);
-                    }
-                }
+                // if (modelo == null) {
+                //     try {
+                //         Modelo modeloNuevo = new Modelo(
+                //             inspeccionDto.getVehiculo().getModelo().getNombre(),
+                //             inspeccionDto.getVehiculo().getModelo().getMarca()
+                //         );
+                //         modeloService.save(modeloNuevo);
+                //         modelo = modeloNuevo; 
+                //     } catch (Exception e) {
+                //         return new ResponseEntity<>("No se pudo crear el modelo",HttpStatus.BAD_REQUEST);
+                //     }
+                // }
                 
                 try {
                     Vehiculo vehiculoNuevo = new Vehiculo(
@@ -122,7 +123,7 @@ public class InspeccionController {
                     );
                     vehiculoService.save(vehiculoNuevo);
                     vehiculo = vehiculoNuevo;
-                    System.out.println("vehi creado");
+                    System.out.println("vehiculo creado");
                     
                 } catch (Exception e) {
                     return new ResponseEntity<>("No se pudo crear el vehiculo",HttpStatus.BAD_REQUEST);
